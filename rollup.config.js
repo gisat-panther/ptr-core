@@ -22,7 +22,7 @@ const lodashExternal = [
 	'lodash/isEmpty',
 	'lodash/merge',
 	'lodash/keys',
-	'lodash/each'
+	'lodash/each',
 ];
 
 export default {
@@ -53,7 +53,7 @@ export default {
 	plugins: [
 		babel({
 			plugins: ['lodash'],
-			babelHelpers: 'bundled'
+			babelHelpers: 'bundled',
 		}),
 		commonjs({
 			include: 'node_modules/**',
