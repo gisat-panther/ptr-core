@@ -2,7 +2,9 @@
 	"name": "ci",
 	"email": "ci@example.com",
 	"baseBranch": "master",
-	"prereleaseBranches": ["dev"],
+	"prereleaseBranches": [
+		"dev"
+	],
 	"versionBranches": true,
 	"labels": [
 		{
@@ -19,7 +21,7 @@
 			"description": "Increment the minor version when merged",
 			"releaseType": "minor",
 			"color": "#87cdc8",
-      "overwrite": true
+			"overwrite": true
 		},
 		{
 			"name": "patch",
@@ -27,14 +29,14 @@
 			"description": "Increment the patch version when merged",
 			"releaseType": "patch",
 			"color": "#d5ece9",
-      "overwrite": true
+			"overwrite": true
 		},
 		{
 			"name": "skip-release",
 			"description": "Preserve the current version when merged",
 			"releaseType": "skip",
 			"color": "#ffbd34",
-      "overwrite": true
+			"overwrite": true
 		}
 	]
 }
