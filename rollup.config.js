@@ -1,9 +1,8 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
 import postcss from 'rollup-plugin-postcss';
 import path from 'path';
-import alias from '@rollup/plugin-alias';
 
 const env = process.env.NODE_ENV;
 const pkg = require('./package.json');
@@ -19,7 +18,12 @@ Object.assign(Paths, {
 	OUTPUT: Paths.DIST + '/index.js',
 });
 
-const lodashExternal = ['lodash/isEmpty'];
+const lodashExternal = [
+	'lodash/isEmpty',
+	'lodash/merge',
+	'lodash/keys',
+	'lodash/each',
+];
 
 export default {
 	input: 'src/index.js',
@@ -32,6 +36,7 @@ export default {
 		'@gisatcz/cross-package-react-context',
 		'postcss-url',
 		'rollup-plugin-postcss',
+		/@babel\/runtime/,
 		...lodashExternal,
 	],
 	output: {
@@ -49,6 +54,7 @@ export default {
 	plugins: [
 		babel({
 			plugins: ['lodash'],
+			babelHelpers: 'runtime',
 		}),
 		commonjs({
 			include: 'node_modules/**',
