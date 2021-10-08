@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import multi from '@rollup/plugin-multi-entry';
 
@@ -30,6 +30,7 @@ export default {
 		multi(),
 		babel({
 			plugins: ['lodash'],
+			babelHelpers: 'bundled'
 		}),
 		commonjs({
 			include: 'node_modules/**',

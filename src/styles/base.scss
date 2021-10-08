@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '_variables';
 
 html {
@@ -49,7 +50,7 @@ h5 {
 p {
 	color: var(--base90);
 	font-size: $a1;
-	margin-bottom: m(2/3);
+	margin-bottom: m(math.div(2, 3));
 }
 a {
 	color: var(--accent50);
