@@ -36,6 +36,7 @@ export default {
 		'@gisatcz/cross-package-react-context',
 		'postcss-url',
 		'rollup-plugin-postcss',
+		/@babel\/runtime/,
 		...lodashExternal,
 	],
 	output: {
@@ -53,7 +54,7 @@ export default {
 	plugins: [
 		babel({
 			plugins: ['lodash'],
-			babelHelpers: 'bundled',
+			babelHelpers: 'runtime',
 		}),
 		commonjs({
 			include: 'node_modules/**',
