@@ -37,6 +37,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm install
+          npm ci
           npm run build
           npx auto shipit
