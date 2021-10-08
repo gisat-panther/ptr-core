@@ -30,7 +30,7 @@ export default {
 		multi(),
 		babel({
 			plugins: ['lodash'],
-			babelHelpers: 'bundled',
+			babelHelpers: 'runtime',
 		}),
 		commonjs({
 			include: 'node_modules/**',
