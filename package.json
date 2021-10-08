@@ -6,7 +6,7 @@
 		"panther",
 		"gisat"
 	],
-	"homepage": "https://github.com/gisat/core",
+	"homepage": "https://github.com/gisat-panther/ptr-core",
 	"prettier": "@gisatcz/prettier-config",
 	"husky": {
 		"hooks": {
@@ -23,7 +23,7 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/gisat/core"
+		"url": "https://github.com/gisat-panther/ptr-core"
 	},
 	"dependencies": {
 		"@gisatcz/cross-package-react-context": "^0.1.0",
