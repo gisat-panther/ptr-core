@@ -1,3 +1,29 @@
+# v1.4.0 (Wed Oct 13 2021)
+
+#### 🚀 Enhancement
+
+- Fix/version [#30](https://github.com/gisat-panther/ptr-core/pull/30) ([@vdubr](https://github.com/vdubr))
+- updated package-lock [#26](https://github.com/gisat-panther/ptr-core/pull/26) ([@vlach1989](https://github.com/vlach1989))
+- Update release proccess [#25](https://github.com/gisat-panther/ptr-core/pull/25) ([@vdubr](https://github.com/vdubr))
+- Update package and release action [#24](https://github.com/gisat-panther/ptr-core/pull/24) ([@vdubr](https://github.com/vdubr))
+- Put react as a peerDependency. [#23](https://github.com/gisat-panther/ptr-core/pull/23) ([@vdubr](https://github.com/vdubr))
+- Configuration merge & update configuration defaults [#14](https://github.com/gisat-panther/ptr-core/pull/14) ([@mbabic84](https://github.com/mbabic84))
+
+#### 🐾 Patch
+
+- Revert auto package [#31](https://github.com/gisat-panther/ptr-core/pull/31) ([@vdubr](https://github.com/vdubr))
+- Mirror fix for testing automatic releasing. [#29](https://github.com/gisat-panther/ptr-core/pull/29) ([@vdubr](https://github.com/vdubr))
+- Change package description to test, if auto deploy works correctly [#28](https://github.com/gisat-panther/ptr-core/pull/28) ([@vlach1989](https://github.com/vlach1989))
+- manually bump version [#27](https://github.com/gisat-panther/ptr-core/pull/27) ([@vlach1989](https://github.com/vlach1989))
+
+#### Authors: 3
+
+- [@mbabic84](https://github.com/mbabic84)
+- Pavel Vlach ([@vlach1989](https://github.com/vlach1989))
+- Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))
+
+---
+
 # v1.4.0 (Wed Apr 28 2021)
 
 #### 🚀 Enhancement
