@@ -8,11 +8,6 @@
 	],
 	"homepage": "https://github.com/gisat-panther/ptr-core",
 	"prettier": "@gisatcz/prettier-config",
-	"husky": {
-		"hooks": {
-			"pre-commit": "pretty-quick --staged"
-		}
-	},
 	"style": "dist/style.css",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
@@ -51,7 +46,6 @@
 		"chai": "^4.3.0",
 		"cross-env": "^7.0.3",
 		"glob": "^7.2.0",
-		"husky": "^5.0.9",
 		"mocha": "^8.3.0",
 		"npm-run-all": "^4.1.5",
 		"npm-watch": "^0.11.0",
