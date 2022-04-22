@@ -60,7 +60,7 @@ export default {
 			include: 'node_modules/**',
 		}),
 		postcss({
-			extract: path.resolve(Paths.DIST + '/style.css'),
+			extract: true,
 		}),
 		filesize(),
 		// TODO figure out dev and prod version

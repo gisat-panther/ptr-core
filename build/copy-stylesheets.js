@@ -10,9 +10,11 @@ glob("src/**/*.*(scss|css)", {}, function (er, files) {
 		const relativePath = parsedPath.dir.split("src/")[1];
 		const basePath = parsedPath.base;
 		
-		if (!fs.existsSync(`lib/${relativePath}`)) {
+		if (relativePath && !fs.existsSync(`lib/${relativePath}`)) {
 			fs.mkdirSync(`lib/${relativePath}`, { recursive: true });	
 		}
-		fs.copyFileSync(file, `lib/${relativePath}/${basePath}`);
+		const filePath = path.join(...['lib', relativePath, basePath].filter((p) => p));
+		
+		fs.copyFileSync(file, filePath);
 	});
 });
