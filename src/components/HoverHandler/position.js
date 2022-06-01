@@ -239,7 +239,7 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 		let conflict = true;
 		let pos = null;
 		switch (position) {
-			case 'top':
+			case 'top': {
 				const topPos = getTopPossition(
 					origPosX,
 					origPosY,
@@ -256,7 +256,8 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 					conflict,
 				};
 				break;
-			case 'bottom':
+			}
+			case 'bottom': {
 				const bottomPos = getBottomPossition(
 					origPosX,
 					origPosY,
@@ -277,7 +278,8 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 					conflict,
 				};
 				break;
-			case 'left':
+			}
+			case 'left': {
 				const leftPos = getLeftPossition(
 					origPosX,
 					origPosY,
@@ -294,7 +296,8 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 					conflict,
 				};
 				break;
-			case 'right':
+			}
+			case 'right': {
 				const rightPos = getRightPossition(
 					origPosX,
 					origPosY,
@@ -315,6 +318,7 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 					conflict,
 				};
 				break;
+			}
 			default:
 				break;
 		}

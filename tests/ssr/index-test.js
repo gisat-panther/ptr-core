@@ -1,3 +1,4 @@
+import {describe, it} from 'mocha';
 import {assert} from 'chai';
 import * as ssr from '../../src/ssr/index';
 
@@ -71,7 +72,6 @@ describe('ssr/index', function () {
 
 		it('no requests', function (done) {
 			const requestCounter = ssr.createRequestCounter();
-			const dispatch = ssr.createAsyncMiddleware(requestCounter)(store)(next);
 			assert.strictEqual(requestCounter.pendingRequests(), 0);
 
 			requestCounter.createReadyP().then(() => done());
