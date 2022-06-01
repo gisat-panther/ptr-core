@@ -1,6 +1,6 @@
 {
 	"name": "@gisatcz/ptr-core",
-	"version": "1.6.2-0",
+	"version": "1.6.2-1",
 	"description": "Panther FE core package.",
 	"sideEffects": false,
 	"keywords": [
