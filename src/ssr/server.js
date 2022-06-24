@@ -1,11 +1,9 @@
 import {renderToString} from 'react-dom/server';
-import {Helmet} from 'react-helmet';
 
 const createRenderFnDefaults = {
 	maxRetries: 5,
 	createDataFn: el => ({
 		html: renderToString(el),
-		helmet: Helmet.renderStatic(),
 	}),
 };
 

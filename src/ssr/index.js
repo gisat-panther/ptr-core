@@ -83,7 +83,7 @@ export function createRequestCounter(options) {
  * or we have to wait for some data.
  */
 export function createAsyncMiddleware(requestCounter) {
-	return function (store) {
+	return function () {
 		return function (next) {
 			return function (action) {
 				const res = next(action);

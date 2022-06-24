@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -7,31 +7,30 @@ import Popup from './Popup';
 import Context from '@gisatcz/cross-package-react-context';
 const HoverContext = Context.getContext('HoverContext');
 
-class HoverHandler extends React.PureComponent {
-	static propTypes = {
-		selectedItems: PropTypes.array,
-		compressedPopups: PropTypes.bool,
-		popupContentComponent: PropTypes.oneOfType([
-			PropTypes.element,
-			PropTypes.func,
-		]),
-	};
+const HoverHandler = ({
+	popupContentComponent,
+	compressedPopups,
+	selectedItems,
+	children,
+}) => {
+	const [state, setState] = useState({
+		hoveredItems: [],
+		popupContent: null,
+		x: null,
+		y: null,
+		data: null,
+	});
 
-	constructor(props) {
-		super(props);
-		this.state = {
+	const onHoverOut = () => {
+		setState({
 			hoveredItems: [],
 			popupContent: null,
-			x: null,
-			y: null,
 			data: null,
-		};
+			fidColumnName: null,
+		});
+	};
 
-		this.onHover = this.onHover.bind(this);
-		this.onHoverOut = this.onHoverOut.bind(this);
-	}
-
-	onHover(hoveredItems, options) {
+	const onHover = (hoveredItems, options) => {
 		// TODO what is wrong with attributes? Just bad signal? Else try single layer
 
 		// TODO check popup coordinates -> if the same -> merge data / else -> overwrite
@@ -47,10 +46,7 @@ class HoverHandler extends React.PureComponent {
 
 		// check if coordinates has been changed
 		if (options && options.popup && options.popup.x && options.popup.y) {
-			if (
-				this.state.x !== options.popup.x ||
-				this.state.y !== options.popup.y
-			) {
+			if (state.x !== options.popup.x || state.y !== options.popup.y) {
 				coordChanged = true;
 				update.x = options.popup.x;
 				update.y = options.popup.y;
@@ -64,85 +60,82 @@ class HoverHandler extends React.PureComponent {
 			update.data = options.popup.data;
 			update.fidColumnName = options.popup.fidColumnName;
 		} else {
-			update.hoveredItems = [...this.state.hoveredItems, ...hoveredItems];
+			update.hoveredItems = [...state.hoveredItems, ...hoveredItems];
 			if (
 				options &&
 				options.popup &&
 				options.popup.data &&
 				options.popup.data.length
 			) {
-				update.data = [...this.state.data, ...options.popup.data];
+				update.data = [...state.data, ...options.popup.data];
 				update.fidColumnName = options.popup.fidColumnName;
 			}
 		}
 
 		if (!_.isEmpty(update)) {
 			if (update.hoveredItems && update.hoveredItems.length) {
-				this.setState(update);
+				setState(update);
 			} else {
-				this.onHoverOut();
+				onHoverOut();
 			}
 		}
-	}
+	};
 
-	onHoverOut() {
-		this.setState({
-			hoveredItems: [],
-			popupContent: null,
-			data: null,
-			fidColumnName: null,
-		});
-	}
-
-	render() {
-		return (
-			<HoverContext.Provider
-				value={{
-					hoveredItems: this.state.hoveredItems,
-					selectedItems: this.props.selectedItems,
-					onHover: this.onHover,
-					onHoverOut: this.onHoverOut,
-					x: this.state.x,
-					y: this.state.y,
-				}}
-			>
-				{this.props.children}
-				{this.state.popupContent || this.state.data ? this.renderPopup() : null}
-			</HoverContext.Provider>
-		);
-	}
-
-	renderPopup() {
-		return (
-			<Popup
-				x={this.state.x}
-				y={this.state.y}
-				content={
-					this.props.popupContentComponent
-						? this.renderPopupContent()
-						: this.state.popupContent
-				}
-				compressed={this.props.compressedPopups}
-			/>
-		);
-	}
-
-	renderPopupContent() {
-		const comp = this.props.popupContentComponent;
+	const renderPopupContent = () => {
+		const comp = popupContentComponent;
 		if (React.isValidElement(comp)) {
 			return React.cloneElement(comp, {
-				data: this.state.data,
-				featureKeys: this.state.hoveredItems,
-				fidColumnName: this.state.fidColumnName,
+				data: state.data,
+				featureKeys: state.hoveredItems,
+				fidColumnName: state.fidColumnName,
 			});
 		} else {
 			return React.createElement(comp, {
-				data: this.state.data,
-				featureKeys: this.state.hoveredItems,
-				fidColumnName: this.state.fidColumnName,
+				data: state.data,
+				featureKeys: state.hoveredItems,
+				fidColumnName: state.fidColumnName,
 			});
 		}
-	}
-}
+	};
+
+	const renderPopup = () => {
+		return (
+			<Popup
+				x={state.x}
+				y={state.y}
+				content={
+					popupContentComponent ? renderPopupContent() : state.popupContent
+				}
+				compressed={compressedPopups}
+			/>
+		);
+	};
+
+	return (
+		<HoverContext.Provider
+			value={{
+				hoveredItems: state.hoveredItems,
+				selectedItems: selectedItems,
+				onHover: onHover,
+				onHoverOut: onHoverOut,
+				x: state.x,
+				y: state.y,
+			}}
+		>
+			{children}
+			{state.popupContent || state.data ? renderPopup() : null}
+		</HoverContext.Provider>
+	);
+};
+
+HoverHandler.propTypes = {
+	children: PropTypes.node,
+	selectedItems: PropTypes.array,
+	compressedPopups: PropTypes.bool,
+	popupContentComponent: PropTypes.oneOfType([
+		PropTypes.element,
+		PropTypes.func,
+	]),
+};
 
 export default HoverHandler;

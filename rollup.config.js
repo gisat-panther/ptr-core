@@ -2,7 +2,6 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
 import postcss from 'rollup-plugin-postcss';
-import path from 'path';
 
 const env = process.env.NODE_ENV;
 const pkg = require('./package.json');
@@ -29,7 +28,6 @@ export default {
 	input: 'src/index.js',
 	external: [
 		'react',
-		'react-helmet',
 		'react-dom/server',
 		'prop-types',
 		'classnames',
@@ -41,7 +39,7 @@ export default {
 	],
 	output: {
 		file: {
-			es: pkg.module,
+			es: 'dist/index.es.js',
 			cjs: pkg.main,
 		}[env],
 		format: env,
@@ -60,7 +58,7 @@ export default {
 			include: 'node_modules/**',
 		}),
 		postcss({
-			extract: path.resolve(Paths.DIST + '/style.css'),
+			extract: true,
 		}),
 		filesize(),
 		// TODO figure out dev and prod version

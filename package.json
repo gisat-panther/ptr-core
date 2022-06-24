@@ -1,19 +1,15 @@
 {
 	"name": "@gisatcz/ptr-core",
-	"version": "1.6.0",
+	"version": "1.6.2-1",
 	"description": "Panther FE core package.",
+	"sideEffects": false,
 	"keywords": [
 		"panther",
 		"gisat"
 	],
 	"homepage": "https://github.com/gisat-panther/ptr-core",
 	"prettier": "@gisatcz/prettier-config",
-	"husky": {
-		"hooks": {
-			"pre-commit": "pretty-quick --staged"
-		}
-	},
-	"style": "dist/style.css",
+	"style": "dist/index.css",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
 	"files": [
@@ -26,71 +22,65 @@
 		"url": "https://github.com/gisat-panther/ptr-core"
 	},
 	"dependencies": {
-		"@gisatcz/cross-package-react-context": "^0.1.0",
+		"@gisatcz/cross-package-react-context": "^0.2.0",
 		"classnames": "^2.3.1",
 		"lodash": "^4.17.21",
-		"prop-types": "^15.7.2",
-		"react-helmet": "^6.1.0"
+		"prop-types": "^15.7.2"
 	},
 	"peerDependencies": {
-		"react": "^16.13.1 || ^17.0.2",
-		"react-dom": "^16.13.1 || ^17.0.2"
+		"react": "^16.13.1 || ^17.0.2 || ^18.0.0",
+		"react-dom": "^16.13.1 || ^17.0.2 || ^18.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.15.7",
 		"@babel/core": "^7.15.8",
-		"@babel/plugin-transform-runtime": "^7.15.8",
+		"@babel/plugin-transform-runtime": "^7.18.2",
 		"@babel/preset-env": "^7.15.8",
 		"@babel/preset-react": "^7.14.5",
+		"@babel/register": "^7.17.7",
 		"@gisatcz/prettier-config": "^0.0.3",
 		"@rollup/plugin-babel": "^5.3.0",
-		"@rollup/plugin-commonjs": "^21.0.0",
+		"@rollup/plugin-commonjs": "^22.0.0",
 		"@rollup/plugin-multi-entry": "^4.1.0",
 		"auto": "^10.16.5",
 		"babel-plugin-lodash": "^3.3.4",
 		"chai": "^4.3.0",
 		"cross-env": "^7.0.3",
-		"glob": "^7.2.0",
-		"husky": "^5.0.9",
-		"mocha": "^8.3.0",
+		"eslint": "^8.16.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-react": "^7.30.0",
+		"mocha": "^10.0.0",
 		"npm-run-all": "^4.1.5",
-		"npm-watch": "^0.11.0",
 		"path": "^0.12.7",
 		"postcss": "^8.3.9",
 		"prettier": "^2.4.1",
 		"pretty-quick": "^3.1.1",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
+		"react": "^18.1.0",
+		"react-dom": "^18.1.0",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.58.0",
 		"rollup-plugin-filesize": "^9.1.1",
-		"rollup-plugin-node-externals": "^2.2.0",
 		"rollup-plugin-postcss": "^4.0.1",
 		"sass": "^1.42.1"
 	},
-	"watch": {
-		"test": {
-			"patterns": [
-				"src",
-				"tests"
-			]
-		}
-	},
 	"scripts": {
 		"clean": "rimraf dist",
-		"start": "run-s clean && run-p start:es start:cjs start:lib:es copy:stylesheets",
-		"start:lib:es": "cross-env BABEL_ENV=es babel --watch src -d lib --verbose",
-		"start:cjs": "cross-env NODE_ENV=cjs rollup -c -w",
-		"start:es": "cross-env NODE_ENV=es rollup -c -w",
-		"build": "run-s clean && run-p build:es build:cjs build:lib:es",
-		"build:es": "cross-env NODE_ENV=es rollup -c",
-		"build:cjs": "cross-env NODE_ENV=cjs rollup -c",
-		"build:lib:es": "npm-run-all build:babel:lib:es copy:stylesheets copy:assets",
-		"build:babel:lib:es": "cross-env BABEL_ENV=es babel src -d lib",
+		"start": "cross-env BABEL_ENV=development run-s clean && run-p start:es start:cjs start:lib:es && copy:stylesheets copy:assets",
+		"start:lib:es": "cross-env BABEL_ENV=development babel --watch src -d lib --verbose",
+		"start:cjs": "cross-env BABEL_ENV=development NODE_ENV=cjs rollup -c -w",
+		"start:es": "cross-env BABEL_ENV=development NODE_ENV=es rollup -c -w",
+		"build": "cross-env BABEL_ENV=production run-s clean && run-p build:es build:cjs build:lib:es",
+		"build:es": "cross-env BABEL_ENV=production NODE_ENV=es rollup -c",
+		"build:cjs": "cross-env BABEL_ENV=production NODE_ENV=cjs rollup -c",
+		"build:lib:es": "cross-env BABEL_ENV=production npm-run-all build:babel:lib:es copy:stylesheets copy:assets",
+		"build:babel:lib:es": "cross-env BABEL_ENV=production babel src -d lib",
 		"copy:stylesheets": "node ./build/copy-stylesheets.js",
 		"copy:assets": "node ./build/copy-assets.js",
-		"test": "cross-env NODE_ENV=cjs rollup -c ./rollup.test.config.js && mocha -- --require source-map-support/register",
-		"test:watch": "npm-watch test",
-		"format": "prettier --write ."
+		"test": "cross-env TZ=utc NODE_ENV=test mocha",
+		"test:watch": "NODE_ENV=test mocha --watch",
+		"format": "prettier --write .",
+		"lint": "eslint .",
+		"lintFix": "eslint . --fix"
 	}
 }
