@@ -1,23 +1,27 @@
 [![N|Solid](https://img.shields.io/badge/created%20by-GISAT-green)](https://gisat.cz/)
+
 # **Welcome to Panther framework**
+
 Panther framework is developed by GISAT s.r.o and used to create dynamic web applications with interactive maps and charts.
 
 ## Getting started
 
 #### Installation
+
 **ptr-core** is a heart of the framework. To get started, install the core using node package manager
+
 ```
 npm i -D @gisatcz/ptr-core
 ```
 
 #### Importing core styles
+
 Styles are presented in css and scss fromat. To import core Panther styles to the new project simply use:
 
 ```js
 import '@gisatcz/ptr-core/lib/styles/reset.css';
 import '@gisatcz/ptr-core/lib/styles/base.scss';
 ```
-
 
 ## Server Side Rendering
 
@@ -44,6 +48,7 @@ renderApp();
 ```
 
 #### Configuration
+
 Create a configuration file src/config/index.js with the following content
 
 ```js
@@ -54,15 +59,17 @@ import {config} from '@gisatcz/ptr-core';
 import appDefaults from './appDefaults';
 export default config(appDefaults);
 ```
+
 and src/config/appDefaults.js
+
 ```
 export default {
 	apiBackendPath: '',
 	timeSerieDataUrl: '/static/data/',
 };
 ```
-Where ConnectedApp is the application
 
+Where ConnectedApp is the application
 
 ### Api
 
@@ -171,4 +178,3 @@ function handler(req, res) {
 	return requestCounter.createReadyP().then(() => renderFn());
 }
 ```
-
