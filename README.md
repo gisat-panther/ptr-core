@@ -17,12 +17,13 @@ To use SSR, include into src/index.jsx isServer component with ReactDOM
 
 ```js
 import ReactDOM from 'react-dom';
-import { isServer } from '@gisatcz/ptr-core';
+import {isServer} from '@gisatcz/ptr-core';
 ```
 
 Example of use:
+
 ```js
-import { isServer } from '@gisatcz/ptr-core';
+import {isServer} from '@gisatcz/ptr-core';
 
 function renderApp() {
 	const rootEl = document.getElementById('root');
@@ -33,6 +34,7 @@ function renderApp() {
 
 renderApp();
 ```
+
 Where ConnectedApp is the application
 
 ### appDefaults
@@ -40,9 +42,8 @@ Where ConnectedApp is the application
 appDefaults are parsed from .env and prepared for SSR
 
 ```js
-import { appDefaults } from '@gisatcz/ptr-core'
+import {appDefaults} from '@gisatcz/ptr-core';
 ```
-
 
 ### Api
 
