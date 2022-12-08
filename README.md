@@ -1,6 +1,48 @@
 # ptr-core
 
-## ssr
+## Importing core styles
+
+To import core Panther styles to the new project use:
+
+```js
+// Style reset
+import '@gisatcz/ptr-core/lib/styles/reset.css';
+// Core styles
+import '@gisatcz/ptr-core/lib/styles/base.scss';
+```
+
+## Server Side Rendering
+
+To use SSR, include into src/index.jsx isServer component with ReactDOM
+
+```js
+import ReactDOM from 'react-dom';
+import { isServer } from '@gisatcz/ptr-core';
+```
+
+Example of use:
+```js
+import { isServer } from '@gisatcz/ptr-core';
+
+function renderApp() {
+	const rootEl = document.getElementById('root');
+	const render =
+		isServer || rootEl.hasChildNodes() ? ReactDOM.hydrate : ReactDOM.render;
+	render(<ConnectedApp />, rootEl);
+}
+
+renderApp();
+```
+Where ConnectedApp is the application
+
+### appDefaults
+
+appDefaults are parsed from .env and prepared for SSR
+
+```js
+import { appDefaults } from '@gisatcz/ptr-core'
+```
+
 
 ### Api
 
