@@ -1,9 +1,9 @@
 @import '../../../styles/_variables';
 
 .ptr-popup {
+	pointer-events: none;
 	position: fixed;
 	background: rgba(var(--base0rgb), 0.95);
-	// position: absolute;
 	z-index: 99999;
 	padding: 0.5rem 0.75rem;
 	border: 1px solid rgba(255, 255, 255, 0.5);

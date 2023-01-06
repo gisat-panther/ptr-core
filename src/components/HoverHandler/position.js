@@ -11,7 +11,7 @@ const getAbsoluteElementPosition = element => {
 };
 
 //top
-const getTopPossition = (
+const getTopPosition = (
 	origPosX,
 	origPosY,
 	width,
@@ -60,13 +60,14 @@ const getTopPossition = (
 
 	// return [posX, posY]
 	return {
-		position: {posX: posX - BBox[3], posY: posY},
+		// position: {posX: posX - BBox[3], posY: posY},
+		position: {posX: posX, posY: posY},
 		boundingRect,
 	};
 };
 
 //bottom
-const getBottomPossition = (
+const getBottomPosition = (
 	origPosX,
 	origPosY,
 	width,
@@ -114,13 +115,14 @@ const getBottomPossition = (
 	];
 
 	return {
-		position: {posX: posX - BBox[3], posY: posY},
+		// position: {posX: posX - BBox[3], posY: posY},
+		position: {posX: posX, posY: posY},
 		boundingRect,
 	};
 };
 
 //right
-const getRightPossition = (
+const getRightPosition = (
 	origPosX,
 	origPosY,
 	width,
@@ -164,13 +166,14 @@ const getRightPossition = (
 	];
 
 	return {
-		position: {posX: posXAbsoplute - BBox[3], posY: posY - BBox[0]},
+		// position: {posX: posXAbsoplute - BBox[3], posY: posY - BBox[0]},
+		position: {posX: posXAbsoplute, posY: posY},
 		boundingRect,
 	};
 };
 
 //left
-const getLeftPossition = (
+const getLeftPosition = (
 	origPosX,
 	origPosY,
 	width,
@@ -214,7 +217,8 @@ const getLeftPossition = (
 	];
 
 	return {
-		position: {posX: posXAbsoplute - BBox[3], posY: posY - BBox[0]}, //relative to element
+		// position: {posX: posXAbsoplute, posY: posY - BBox[0]}, //relative to element
+		position: {posX: posXAbsoplute, posY: posY}, //relative to element
 		boundingRect,
 	};
 };
@@ -227,104 +231,99 @@ const checkBoundatiesConflict = (innerBoundingRect, padding, BBox) => {
 	return !(topInside && rightInside && bottomInside && leftInside);
 };
 
-const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
-	const getPosition = (
-		position,
-		origPosX,
-		origPosY,
-		width,
-		height,
-		hoveredElemen
-	) => {
-		let conflict = true;
-		let pos = null;
-		switch (position) {
-			case 'top': {
-				const topPos = getTopPossition(
-					origPosX,
-					origPosY,
-					width,
-					height,
-					hoveredElemen,
-					padding,
-					BBox,
-					referencePoint
-				);
-				conflict = checkBoundatiesConflict(topPos.boundingRect, padding, BBox);
-				pos = {
-					position: topPos,
-					conflict,
-				};
-				break;
-			}
-			case 'bottom': {
-				const bottomPos = getBottomPossition(
-					origPosX,
-					origPosY,
-					width,
-					height,
-					hoveredElemen,
-					padding,
-					BBox,
-					referencePoint
-				);
-				conflict = checkBoundatiesConflict(
-					bottomPos.boundingRect,
-					padding,
-					BBox
-				);
-				pos = {
-					position: bottomPos,
-					conflict,
-				};
-				break;
-			}
-			case 'left': {
-				const leftPos = getLeftPossition(
-					origPosX,
-					origPosY,
-					width,
-					height,
-					hoveredElemen,
-					padding,
-					BBox,
-					referencePoint
-				);
-				conflict = checkBoundatiesConflict(leftPos.boundingRect, padding, BBox);
-				pos = {
-					position: leftPos,
-					conflict,
-				};
-				break;
-			}
-			case 'right': {
-				const rightPos = getRightPossition(
-					origPosX,
-					origPosY,
-					width,
-					height,
-					hoveredElemen,
-					padding,
-					BBox,
-					referencePoint
-				);
-				conflict = checkBoundatiesConflict(
-					rightPos.boundingRect,
-					padding,
-					BBox
-				);
-				pos = {
-					position: rightPos,
-					conflict,
-				};
-				break;
-			}
-			default:
-				break;
+const getPosition = (
+	position,
+	origPosX,
+	origPosY,
+	width,
+	height,
+	hoveredElemen,
+	padding,
+	BBox,
+	referencePoint
+) => {
+	let conflict = true;
+	let pos = null;
+	switch (position) {
+		case 'top': {
+			const topPos = getTopPosition(
+				origPosX,
+				origPosY,
+				width,
+				height,
+				hoveredElemen,
+				padding,
+				BBox,
+				referencePoint
+			);
+			conflict = checkBoundatiesConflict(topPos.boundingRect, padding, BBox);
+			pos = {
+				position: topPos,
+				conflict,
+			};
+			break;
 		}
-		return pos;
-	};
+		case 'bottom': {
+			const bottomPos = getBottomPosition(
+				origPosX,
+				origPosY,
+				width,
+				height,
+				hoveredElemen,
+				padding,
+				BBox,
+				referencePoint
+			);
+			conflict = checkBoundatiesConflict(bottomPos.boundingRect, padding, BBox);
+			pos = {
+				position: bottomPos,
+				conflict,
+			};
+			break;
+		}
+		case 'left': {
+			const leftPos = getLeftPosition(
+				origPosX,
+				origPosY,
+				width,
+				height,
+				hoveredElemen,
+				padding,
+				BBox,
+				referencePoint
+			);
+			conflict = checkBoundatiesConflict(leftPos.boundingRect, padding, BBox);
+			pos = {
+				position: leftPos,
+				conflict,
+			};
+			break;
+		}
+		case 'right': {
+			const rightPos = getRightPosition(
+				origPosX,
+				origPosY,
+				width,
+				height,
+				hoveredElemen,
+				padding,
+				BBox,
+				referencePoint
+			);
+			conflict = checkBoundatiesConflict(rightPos.boundingRect, padding, BBox);
+			pos = {
+				position: rightPos,
+				conflict,
+			};
+			break;
+		}
+		default:
+			break;
+	}
+	return pos;
+};
 
+const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 	return (origPosX, origPosY, width, height, hoveredElemen) => {
 		let validPosition = null;
 
@@ -335,9 +334,11 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 				origPosY,
 				width,
 				height,
-				hoveredElemen
+				hoveredElemen,
+				padding,
+				BBox,
+				referencePoint
 			);
-
 			if (!pos.conflict) {
 				validPosition = {
 					top: pos.position.position.posY,
@@ -347,15 +348,17 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 				break;
 			}
 		}
-
 		if (!validPosition) {
 			const pos = getPosition(
-				positions[0],
+				'right',
 				origPosX,
 				origPosY,
 				width,
 				height,
-				hoveredElemen
+				hoveredElemen,
+				padding,
+				BBox,
+				'corner'
 			);
 
 			validPosition = {
