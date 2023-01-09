@@ -139,7 +139,7 @@ const HoverHandler = ({
 						: popupContent
 				}
 				getStyle={getStyle}
-				hoveredElemen={ref.current}
+				hoveredElement={ref.current}
 				compressed={compressedPopups}
 			/>
 		);

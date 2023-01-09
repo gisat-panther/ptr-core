@@ -36,7 +36,7 @@ const Popup = ({
 	y,
 	content,
 	getStyle,
-	hoveredElemen,
+	hoveredElement,
 	compressed,
 	children,
 }) => {
@@ -67,8 +67,8 @@ const Popup = ({
 
 		let style = null;
 
-		if (typeof getStyle === 'function' && hoveredElemen) {
-			style = getStyle()(posX, posY, width, height, hoveredElemen);
+		if (typeof getStyle === 'function' && hoveredElement) {
+			style = getStyle()(posX, posY, width, height, hoveredElement);
 		} else {
 			//right corner on mouse position
 			style = getTooltipStyle()(posX, posY, width, height);
@@ -120,7 +120,7 @@ Popup.propTypes = {
 	compressed: PropTypes.bool,
 	content: PropTypes.element,
 	getStyle: PropTypes.func,
-	hoveredElemen: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
+	hoveredElement: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
 	x: PropTypes.number,
 	y: PropTypes.number,
 };

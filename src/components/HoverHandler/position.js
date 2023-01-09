@@ -16,17 +16,17 @@ const getTopPosition = (
 	origPosY,
 	width,
 	height,
-	hoveredElemen,
+	hoveredElement,
 	padding,
 	BBox,
 	referencePoint
 ) => {
-	const top = hoveredElemen
-		? hoveredElemen.getBoundingClientRect().top
+	const top = hoveredElement
+		? hoveredElement.getBoundingClientRect().top
 		: origPosY;
 	const posY = top - padding - height;
-	const topAbsoplute = hoveredElemen
-		? getAbsoluteElementPosition(hoveredElemen).top
+	const topAbsoplute = hoveredElement
+		? getAbsoluteElementPosition(hoveredElement).top
 		: origPosY;
 	const posYAbsoplute = topAbsoplute - padding - height;
 	let posX;
@@ -71,17 +71,18 @@ const getBottomPosition = (
 	origPosY,
 	width,
 	height,
-	hoveredElemen,
+	hoveredElement,
 	padding,
 	BBox,
 	referencePoint
 ) => {
-	const bottom = hoveredElemen
-		? hoveredElemen.getBoundingClientRect().top + hoveredElemen.offsetHeight
+	const bottom = hoveredElement
+		? hoveredElement.getBoundingClientRect().top + hoveredElement.offsetHeight
 		: origPosY;
 	const posY = bottom + padding;
-	const bottomAbsoplute = hoveredElemen
-		? getAbsoluteElementPosition(hoveredElemen).top + hoveredElemen.offsetHeight
+	const bottomAbsoplute = hoveredElement
+		? getAbsoluteElementPosition(hoveredElement).top +
+		  hoveredElement.offsetHeight
 		: origPosY;
 	const posYAbsoplute = bottomAbsoplute + padding;
 	let posX;
@@ -125,13 +126,14 @@ const getRightPosition = (
 	origPosY,
 	width,
 	height,
-	hoveredElemen,
+	hoveredElement,
 	padding,
 	BBox,
 	referencePoint
 ) => {
-	const rightAbsoplute = hoveredElemen
-		? getAbsoluteElementPosition(hoveredElemen).left + hoveredElemen.offsetWidth
+	const rightAbsoplute = hoveredElement
+		? getAbsoluteElementPosition(hoveredElement).left +
+		  hoveredElement.offsetWidth
 		: origPosX;
 	const posXAbsoplute = rightAbsoplute + padding;
 	let posY;
@@ -175,13 +177,13 @@ const getLeftPosition = (
 	origPosY,
 	width,
 	height,
-	hoveredElemen,
+	hoveredElement,
 	padding,
 	BBox,
 	referencePoint
 ) => {
-	const leftAbsoplute = hoveredElemen
-		? getAbsoluteElementPosition(hoveredElemen).left
+	const leftAbsoplute = hoveredElement
+		? getAbsoluteElementPosition(hoveredElement).left
 		: origPosX;
 	const posXAbsoplute = leftAbsoplute - padding - width;
 	let posY;
@@ -233,7 +235,7 @@ const getPosition = (
 	origPosY,
 	width,
 	height,
-	hoveredElemen,
+	hoveredElement,
 	padding,
 	BBox,
 	referencePoint
@@ -247,7 +249,7 @@ const getPosition = (
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				referencePoint
@@ -265,7 +267,7 @@ const getPosition = (
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				referencePoint
@@ -283,7 +285,7 @@ const getPosition = (
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				referencePoint
@@ -301,7 +303,7 @@ const getPosition = (
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				referencePoint
@@ -320,7 +322,7 @@ const getPosition = (
 };
 
 const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
-	return (origPosX, origPosY, width, height, hoveredElemen) => {
+	return (origPosX, origPosY, width, height, hoveredElement) => {
 		let validPosition = null;
 
 		for (const position of positions) {
@@ -330,7 +332,7 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				referencePoint
@@ -351,7 +353,7 @@ const getTootlipPosition = (referencePoint, positions, BBox, padding) => {
 				origPosY,
 				width,
 				height,
-				hoveredElemen,
+				hoveredElement,
 				padding,
 				BBox,
 				'corner'
