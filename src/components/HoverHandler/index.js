@@ -158,7 +158,6 @@ const HoverHandler = ({
 		>
 			<div ref={ref} style={{height: '100%', width: '100%'}}>
 				{children}
-				{/* {popup ? this.renderPopup() : null} */}
 				{state.popupContent || state.data ? renderPopup() : null}
 			</div>
 		</componentContext.Provider>
