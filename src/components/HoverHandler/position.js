@@ -214,7 +214,6 @@ const getLeftPosition = (
 	];
 
 	return {
-		// position: {posX: posXAbsoplute, posY: posY - BBox[0]}, //relative to element
 		position: {posX: posXAbsoplute, posY: posY}, //relative to element
 		boundingRect,
 	};
