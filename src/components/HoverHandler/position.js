@@ -164,7 +164,6 @@ const getRightPosition = (
 	];
 
 	return {
-		// position: {posX: posXAbsoplute - BBox[3], posY: posY - BBox[0]},
 		position: {posX: posXAbsoplute, posY: posY},
 		boundingRect,
 	};
