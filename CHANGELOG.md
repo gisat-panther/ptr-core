@@ -1,3 +1,15 @@
+# v1.7.1 (Mon Jan 09 2023)
+
+#### 🐾 Patch
+
+- Update HoverHandler for more common usage [#38](https://github.com/gisat-panther/ptr-core/pull/38) ([@vdubr](https://github.com/vdubr))
+
+#### Authors: 1
+
+- Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))
+
+---
+
 # v1.7.0 (Fri Jun 24 2022)
 
 #### 🚀 Enhancement
