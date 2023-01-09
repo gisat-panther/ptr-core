@@ -105,8 +105,6 @@ const Popup = ({
 	});
 
 	if (ref && !ref.current) {
-		// FIXME - test
-		// commented for world water use in chart
 		style.display = 'none';
 	}
 
