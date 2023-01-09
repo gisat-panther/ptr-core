@@ -2,7 +2,6 @@
 
 #### 🚀 Enhancement
 
-
 #### Authors: 1
 
 - Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))

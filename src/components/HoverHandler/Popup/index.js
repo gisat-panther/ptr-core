@@ -1,4 +1,5 @@
-import React, {useEffect, useRef} from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, {cloneElement, useState, useLayoutEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {getTootlipPosition} from '../position';
 import classnames from 'classnames';
@@ -6,7 +7,7 @@ import classnames from 'classnames';
 import './style.scss';
 
 const WIDTH = 250;
-const HEIGHT = 50;
+const HEIGHT = 0;
 const TOOLTIP_PADDING = 15;
 
 const getTooltipStyle = () => {
@@ -35,13 +36,23 @@ const Popup = ({
 	y,
 	content,
 	getStyle,
-	hoveredElemen,
+	hoveredElement,
 	compressed,
 	children,
 }) => {
 	const ref = useRef();
 
-	const getStyleSelf = () => {
+	const heightRef = useRef();
+	const [tooltipHeight, setTooltipHeight] = useState(0);
+
+	useLayoutEffect(() => {
+		heightRef.current = ref?.current?.offsetHeight;
+		if (ref?.current?.offsetHeight !== tooltipHeight) {
+			setTooltipHeight(ref?.current?.offsetHeight);
+		}
+	}, [content]);
+
+	const getPopupStyle = () => {
 		let posX = x;
 		let posY = y;
 		let maxX = window.innerWidth;
@@ -50,15 +61,14 @@ const Popup = ({
 		const maxWidth = maxX - 20;
 		const maxHeight = maxY - minY - 20;
 
-		const element = ref.current && ref.current.children[0];
-		let width = element && element.offsetWidth ? element.offsetWidth : WIDTH;
-		let height =
-			element && element.offsetHeight ? element.offsetHeight : HEIGHT;
+		const element = ref.current;
+		let width = element?.offsetWidth || WIDTH;
+		const height = tooltipHeight || HEIGHT;
 
 		let style = null;
 
-		if (typeof getStyle === 'function' && hoveredElemen) {
-			style = getStyle()(posX, posY, width, height, hoveredElemen);
+		if (typeof getStyle === 'function' && hoveredElement) {
+			style = getStyle()(posX, posY, width, height, hoveredElement);
 		} else {
 			//right corner on mouse position
 			style = getTooltipStyle()(posX, posY, width, height);
@@ -71,18 +81,24 @@ const Popup = ({
 		if (width > maxWidth) {
 			width = maxWidth;
 		}
-		return style;
+		return element && element.offsetWidth !== 0 && element.offsetHeight !== 0
+			? {...style}
+			: {
+					...style,
+					position: 'absolute',
+					overfloat: 'auto',
+			  };
 	};
 
-	useEffect(() => {
-		// autofocus the input on mount
-		if (true && ref && ref.current) {
-			const style = getStyleSelf();
-			ref.current.style = style;
-		}
-	}, []);
+	// Is it needed???
+	// componentDidMount() {
+	// 	if (true && ref && ref.current) {
+	// 		const style = getPopupStyle();
+	// 		ref.current.style = style;
+	// 	}
+	// }
 
-	const style = getStyleSelf();
+	const style = getPopupStyle();
 
 	let classes = classnames('ptr-popup', {
 		compressed: compressed,
@@ -93,23 +109,20 @@ const Popup = ({
 	}
 
 	return (
-		<div ref={ref}>
-			<div style={style} className={classes}>
-				{content ? React.cloneElement(content) : children}
-			</div>
+		<div ref={ref} style={{...style}} className={classes}>
+			{content ? cloneElement(content) : children}
 		</div>
 	);
 };
 
 Popup.propTypes = {
 	children: PropTypes.node,
-	x: PropTypes.number,
-	y: PropTypes.number,
-	maxX: PropTypes.number,
+	compressed: PropTypes.bool,
 	content: PropTypes.element,
 	getStyle: PropTypes.func,
-	hoveredElemen: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
-	compressed: PropTypes.bool,
+	hoveredElement: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
+	x: PropTypes.number,
+	y: PropTypes.number,
 };
 
 export default Popup;

@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, {useRef, useState, createElement} from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import {isNumber as _isNumber, isEmpty as _isEmpty} from 'lodash';
+import {stateManagement} from '@gisatcz/ptr-utils';
+import Context from '@gisatcz/cross-package-react-context';
 
 import Popup from './Popup';
 
-import Context from '@gisatcz/cross-package-react-context';
-const HoverContext = Context.getContext('HoverContext');
+const defaultHoverContext = 'HoverContext;';
 
 const HoverHandler = ({
 	popupContentComponent,
 	compressedPopups,
-	selectedItems,
+	// selectedItems,
 	children,
+	conextId,
+	defaultHoverContextValues,
+	getStyle,
 }) => {
+	const ref = useRef();
+	const tmpHoveredItems = useRef([]);
+
+	const componentContext = Context.getContext(
+		conextId || defaultHoverContext,
+		defaultHoverContextValues
+	);
+
 	const [state, setState] = useState({
 		hoveredItems: [],
 		popupContent: null,
@@ -21,16 +34,40 @@ const HoverHandler = ({
 		data: null,
 	});
 
-	const onHoverOut = () => {
-		setState({
-			hoveredItems: [],
-			popupContent: null,
-			data: null,
-			fidColumnName: null,
-		});
+	const onHoverOut = hoveredItemsToRemove => {
+		let updateHoveredItems = tmpHoveredItems.current || [];
+
+		if (hoveredItemsToRemove?.length > 0) {
+			// remove hoveredItems from context
+
+			hoveredItemsToRemove.forEach(overlay => {
+				const hoverdItemIndex = updateHoveredItems.findIndex(
+					i => i?.key === overlay.key
+				);
+				if (_isNumber(hoverdItemIndex)) {
+					updateHoveredItems = stateManagement.removeItemByIndex(
+						updateHoveredItems,
+						hoverdItemIndex
+					);
+				}
+			});
+		} else {
+			// else clear all hoveredItems
+			updateHoveredItems = [];
+		}
+
+		tmpHoveredItems.current = updateHoveredItems;
+		setState(prevState => ({
+			...prevState,
+			...{
+				popupContent: null,
+				data: null,
+				fidColumnName: null,
+			},
+		}));
 	};
 
-	const onHover = (hoveredItems, options) => {
+	const onHover = (newHoveredItems = [], options) => {
 		// TODO what is wrong with attributes? Just bad signal? Else try single layer
 
 		// TODO check popup coordinates -> if the same -> merge data / else -> overwrite
@@ -40,92 +77,91 @@ const HoverHandler = ({
 		let coordChanged = false;
 
 		// for older versions compatibility
-		if (options && options.popup && options.popup.content) {
+		if (
+			options &&
+			options.popup &&
+			(options.popup.content || options.popup.content === null)
+		) {
 			update.popupContent = options.popup.content;
 		}
 
 		// check if coordinates has been changed
-		if (options && options.popup && options.popup.x && options.popup.y) {
-			if (state.x !== options.popup.x || state.y !== options.popup.y) {
-				coordChanged = true;
-				update.x = options.popup.x;
-				update.y = options.popup.y;
-			}
+		if (_isNumber(options.popup.x) && _isNumber(options.popup.y)) {
+			// if (state.x !== options.popup.x || state.y !== options.popup.y) {
+			coordChanged = true;
+			update.x = options.popup.x;
+			update.y = options.popup.y;
+			// }
 		}
 
 		// handle data according to coordinates change
 		// TODO fid column name should be part of data
+		const hoveredItemsKeys =
+			newHoveredItems.map(i => i?.key).filter(i => i) || [];
+		const stateHoveredItemWithoutByKey = tmpHoveredItems.current?.filter(
+			i => !hoveredItemsKeys.includes(i?.key)
+		);
+
 		if (coordChanged) {
-			update.hoveredItems = hoveredItems;
 			update.data = options.popup.data;
 			update.fidColumnName = options.popup.fidColumnName;
 		} else {
-			update.hoveredItems = [...state.hoveredItems, ...hoveredItems];
-			if (
-				options &&
-				options.popup &&
-				options.popup.data &&
-				options.popup.data.length
-			) {
+			if (state.data && options.popup.data && options.popup.data.length) {
 				update.data = [...state.data, ...options.popup.data];
 				update.fidColumnName = options.popup.fidColumnName;
 			}
 		}
 
-		if (!_.isEmpty(update)) {
-			if (update.hoveredItems && update.hoveredItems.length) {
-				setState(update);
-			} else {
-				onHoverOut();
-			}
-		}
-	};
+		tmpHoveredItems.current = [
+			...stateHoveredItemWithoutByKey,
+			...newHoveredItems,
+		];
 
-	const renderPopupContent = () => {
-		const comp = popupContentComponent;
-		if (React.isValidElement(comp)) {
-			return React.cloneElement(comp, {
-				data: state.data,
-				featureKeys: state.hoveredItems,
-				fidColumnName: state.fidColumnName,
-			});
-		} else {
-			return React.createElement(comp, {
-				data: state.data,
-				featureKeys: state.hoveredItems,
-				fidColumnName: state.fidColumnName,
-			});
+		if (!_isEmpty(update)) {
+			setState(prevState => ({...prevState, ...update}));
 		}
 	};
 
 	const renderPopup = () => {
+		const {data, hoveredItems, fidColumnName, popupContent, x, y} = state;
+
 		return (
 			<Popup
-				x={state.x}
-				y={state.y}
+				x={x}
+				y={y}
 				content={
-					popupContentComponent ? renderPopupContent() : state.popupContent
+					popupContentComponent
+						? createElement(popupContentComponent, {
+								data: data,
+								featureKeys: hoveredItems,
+								fidColumnName: fidColumnName,
+						  })
+						: popupContent
 				}
+				getStyle={getStyle}
+				hoveredElement={ref.current}
 				compressed={compressedPopups}
 			/>
 		);
 	};
 
-	return (
-		<HoverContext.Provider
+	return componentContext ? (
+		<componentContext.Provider
 			value={{
-				hoveredItems: state.hoveredItems,
-				selectedItems: selectedItems,
+				hoveredItems: tmpHoveredItems.current,
+				selectedItems: state.selectedItems,
 				onHover: onHover,
 				onHoverOut: onHoverOut,
 				x: state.x,
 				y: state.y,
 			}}
 		>
-			{children}
-			{state.popupContent || state.data ? renderPopup() : null}
-		</HoverContext.Provider>
-	);
+			<div ref={ref} style={{height: '100%', width: '100%'}}>
+				{children}
+				{state.popupContent || state.data ? renderPopup() : null}
+			</div>
+		</componentContext.Provider>
+	) : null;
 };
 
 HoverHandler.propTypes = {
@@ -136,6 +172,9 @@ HoverHandler.propTypes = {
 		PropTypes.element,
 		PropTypes.func,
 	]),
+	getStyle: PropTypes.func,
+	conextId: PropTypes.string,
+	defaultHoverContextValues: PropTypes.object,
 };
 
 export default HoverHandler;
