@@ -60,7 +60,6 @@ const getTopPosition = (
 
 	// return [posX, posY]
 	return {
-		// position: {posX: posX - BBox[3], posY: posY},
 		position: {posX: posX, posY: posY},
 		boundingRect,
 	};
