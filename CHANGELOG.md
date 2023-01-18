@@ -1,3 +1,15 @@
+# v1.7.2 (Wed Jan 18 2023)
+
+#### 🐾 Patch
+
+- Typo [#40](https://github.com/gisat-panther/ptr-core/pull/40) ([@vdubr](https://github.com/vdubr))
+
+#### Authors: 1
+
+- Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))
+
+---
+
 # v1.7.1 (Mon Jan 09 2023)
 
 #### 🐾 Patch
