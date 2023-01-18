@@ -7,7 +7,7 @@ import Context from '@gisatcz/cross-package-react-context';
 
 import Popup from './Popup';
 
-const defaultHoverContext = 'HoverContext;';
+const defaultHoverContext = 'HoverContext';
 
 const HoverHandler = ({
 	popupContentComponent,
