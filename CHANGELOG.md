@@ -1,3 +1,15 @@
+# v1.7.3 (Tue Mar 21 2023)
+
+#### 🐾 Patch
+
+- fix invisible tooltip on first occure [#42](https://github.com/gisat-panther/ptr-core/pull/42) ([@vdubr](https://github.com/vdubr))
+
+#### Authors: 1
+
+- Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))
+
+---
+
 # v1.7.2 (Wed Jan 18 2023)
 
 #### 🐾 Patch
