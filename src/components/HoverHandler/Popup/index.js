@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {cloneElement, useState, useLayoutEffect, useRef} from 'react';
+import React, {cloneElement, useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {getTootlipPosition} from '../position';
 import classnames from 'classnames';
@@ -42,15 +42,8 @@ const Popup = ({
 }) => {
 	const ref = useRef();
 
-	const heightRef = useRef();
-	const [tooltipHeight, setTooltipHeight] = useState(0);
-
-	useLayoutEffect(() => {
-		heightRef.current = ref?.current?.offsetHeight;
-		if (ref?.current?.offsetHeight !== tooltipHeight) {
-			setTooltipHeight(ref?.current?.offsetHeight);
-		}
-	}, [content]);
+	const [tooltipHeight, setTooltipHeight] = useState(null);
+	const [tooltipWidth, setTooltipWidth] = useState(null);
 
 	const getPopupStyle = () => {
 		let posX = x;
@@ -62,7 +55,7 @@ const Popup = ({
 		const maxHeight = maxY - minY - 20;
 
 		const element = ref.current;
-		let width = element?.offsetWidth || WIDTH;
+		let width = tooltipWidth || WIDTH;
 		const height = tooltipHeight || HEIGHT;
 
 		let style = null;
@@ -106,7 +99,35 @@ const Popup = ({
 
 	if (ref && !ref.current) {
 		style.display = 'none';
+	} else {
+		delete style.position;
+		delete style.overfloat;
 	}
+
+	// Start observing the element when the component is mounted
+	useEffect(() => {
+		const element = ref?.current;
+
+		if (!element) {
+			return;
+		}
+
+		const observer = new ResizeObserver(() => {
+			if (
+				ref.current?.offsetWidth !== tooltipWidth ||
+				ref.current?.offsetHeight !== tooltipHeight
+			) {
+				setTooltipHeight(ref?.current?.offsetHeight);
+				setTooltipWidth(ref?.current?.offsetWidth);
+			}
+		});
+
+		observer.observe(element);
+		return () => {
+			// Cleanup the observer by unobserving all elements
+			observer.disconnect();
+		};
+	}, []);
 
 	return (
 		<div ref={ref} style={{...style}} className={classes}>
