@@ -3,7 +3,7 @@ import config from './config';
 import HoverHandler from './components/HoverHandler';
 import mapConstants from './constants/Map';
 import Popup from './components/HoverHandler/Popup';
-import distinctColours from "./distinctColours";
+import distinctColours from './distinctColours';
 
 import './styles/base.scss';
 
