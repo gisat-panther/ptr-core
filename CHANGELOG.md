@@ -1,3 +1,15 @@
+# v1.8.0 (Thu Nov 30 2023)
+
+#### 🚀 Enhancement
+
+- Add distinct colour palette [#43](https://github.com/gisat-panther/ptr-core/pull/43) ([@tmdmc](https://github.com/tmdmc))
+
+#### Authors: 1
+
+- [@tmdmc](https://github.com/tmdmc)
+
+---
+
 # v1.7.3 (Tue Mar 21 2023)
 
 #### 🐾 Patch
