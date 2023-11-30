@@ -1,0 +1,45 @@
+// safe dozen
+$distinct0: #e15dda;
+$distinct1: #42d4f4;
+$distinct2: #ffe119;
+$distinct3: #282892;
+$distinct4: #aaffc3;
+$distinct5: #9a6324;
+$distinct6: #dcbeff;
+$distinct7: #800000;
+$distinct8: #fffac8;
+$distinct9: #ff9ec1;
+$distinct10: #4363d8;
+$distinct11: #f58231;
+// same as default accent colour
+$distinct12: #11bda3;
+// a bit positive/negative connotations
+$distinct13: #25b537;
+$distinct14: #e6194b;
+// ! these will make the whole palette problematic for 5 % of population w. colour blindness !
+$distinct15: #911eb4;
+$distinct16: #bfef45;
+$distinct17: #808000;
+$distinct18: #ffd8b1;
+
+body {
+	--distinct0: #{$distinct0};
+	--distinct1: #{$distinct1};
+	--distinct2: #{$distinct2};
+	--distinct3: #{$distinct3};
+	--distinct4: #{$distinct4};
+	--distinct5: #{$distinct5};
+	--distinct6: #{$distinct6};
+	--distinct7: #{$distinct7};
+	--distinct8: #{$distinct8};
+	--distinct9: #{$distinct9};
+	--distinct10: #{$distinct10};
+	--distinct11: #{$distinct11};
+	--distinct12: #{$distinct12};
+	--distinct13: #{$distinct13};
+	--distinct14: #{$distinct14};
+	--distinct15: #{$distinct15};
+	--distinct16: #{$distinct16};
+	--distinct17: #{$distinct17};
+	--distinct18: #{$distinct18};
+}
