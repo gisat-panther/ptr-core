@@ -1,5 +1,6 @@
 @use 'sass:math';
 @import '_variables';
+@import '../distinctColours/distinctColours.module.scss';
 
 html {
 	font-family: 'Roboto', sans-serif;
