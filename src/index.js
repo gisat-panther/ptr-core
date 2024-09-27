@@ -4,6 +4,7 @@ import HoverHandler from './components/HoverHandler';
 import mapConstants from './constants/Map';
 import Popup from './components/HoverHandler/Popup';
 import distinctColours from './distinctColours';
+import FaroAnalytics from './faro';
 
 import './styles/base.scss';
 
@@ -21,4 +22,5 @@ export {
 	mapConstants,
 	Popup,
 	getTootlipPosition,
+	FaroAnalytics,
 };
