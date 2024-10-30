@@ -1,3 +1,18 @@
+# v1.8.1 (Wed Oct 30 2024)
+
+#### 🐾 Patch
+
+- Update auto package [#47](https://github.com/gisat-panther/ptr-core/pull/47) ([@vdubr](https://github.com/vdubr))
+- Update auto package [#46](https://github.com/gisat-panther/ptr-core/pull/46) ([@vdubr](https://github.com/vdubr))
+- Add doc [#45](https://github.com/gisat-panther/ptr-core/pull/45) ([@vdubr](https://github.com/vdubr))
+- Add faro analytics [#44](https://github.com/gisat-panther/ptr-core/pull/44) ([@vdubr](https://github.com/vdubr))
+
+#### Authors: 1
+
+- Vojtěch Dubrovský ([@vdubr](https://github.com/vdubr))
+
+---
+
 # v1.8.0 (Thu Nov 30 2023)
 
 #### 🚀 Enhancement
