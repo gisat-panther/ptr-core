@@ -1,7 +1,7 @@
 import {initializeFaro, LogLevel} from '@grafana/faro-web-sdk';
 
 /**
- *
+ *Faro class
  */
 class FaroAnalytics {
 	// The instance variable that holds the single instance of the class
